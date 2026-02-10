@@ -24,7 +24,11 @@ func (s *UserV2ServiceImpl) UpdateUser(req *UpdateUserRequestV2) (*core.Result[*
 		return nil, err
 	}
 
-	return util.ConvertWithClass[*UpdateUserResponseV2](apiResponse)
+	resultT, err := util.ConvertWithClass[UserInfo](apiResponse)
+	if err == nil {
+		return core.NewResult[*UpdateUserResponseV2](resultT.GetEndpoint(), resultT.GetCode(), resultT.GetTraceId(), resultT.GetMsg(), &UpdateUserResponseV2{UserInfo:resultT.Response}), nil
+	}
+	return nil, err
 }
 
 // GetUser 获取用户信息
@@ -38,7 +42,11 @@ func (s *UserV2ServiceImpl) GetUser(req *GetUserRequestV2) (*core.Result[*GetUse
 		return nil, err
 	}
 
-	return util.ConvertWithClass[*GetUserResponseV2](apiResponse)
+	resultT, err := util.ConvertWithClass[UserInfo](apiResponse)
+	if err == nil {
+		return core.NewResult[*GetUserResponseV2](resultT.GetEndpoint(), resultT.GetCode(), resultT.GetTraceId(), resultT.GetMsg(), &GetUserResponseV2{UserInfo:resultT.Response}), nil
+	}
+	return nil, err
 }
 
 // BatchGetUsers 批量获取用户信息
