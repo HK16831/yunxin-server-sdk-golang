@@ -19,7 +19,7 @@ func (s *UserV2ServiceImpl) UpdateUser(req *UpdateUserRequestV2) (*core.Result[*
 		return nil, err
 	}
 
-	apiResponse, err := s.httpClient.ExecuteV2Api(http.PUT, UpdateUser, pathParams, nil, string(requestBody))
+	apiResponse, err := s.httpClient.ExecuteV2Api(http.PATCH, UpdateUser, pathParams, nil, string(requestBody))
 	if err != nil {
 		return nil, err
 	}
